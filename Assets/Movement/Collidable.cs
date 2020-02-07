@@ -4,6 +4,9 @@ using Unity.Entities;
 using UnityEngine;
 
 
-public struct Collidable : IComponentData
+namespace TurnBasedTutorial.Movement
 {
+    public struct Collidable : IComponentData
+    {
+    }
 }

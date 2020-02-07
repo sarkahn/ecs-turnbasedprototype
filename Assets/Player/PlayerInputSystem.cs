@@ -7,53 +7,55 @@ using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputSystem : JobComponentSystem
+using TurnBasedTutorial.Movement;
+
+namespace TurnBasedTutorial.Players
 {
-    EndSimulationEntityCommandBufferSystem _barrier;
-
-    InputActions _actions;
-
-    InputAction _moveInput;
-
-    protected override void OnCreate()
+    public class PlayerInputSystem : JobComponentSystem
     {
-        _barrier = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        EndSimulationEntityCommandBufferSystem _barrier;
 
-        _actions = new InputActions();
-        _actions.Enable();
+        InputActions _actions;
 
-        _moveInput = _actions.Default.Move;
-    }
+        InputAction _moveInput;
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
-    {
-        var buffer = _barrier.CreateCommandBuffer().ToConcurrent();
+        protected override void OnCreate()
+        {
+            _barrier = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
-        float2 move = 0;
-        if (_moveInput.triggered)
-            move = _moveInput.ReadValue<Vector2>();
+            _actions = new InputActions();
+            _actions.Enable();
 
-        inputDeps = Entities
-            .WithAll<PlayerActor>()
-            .WithAll<TurnAction>()
-            .ForEach((int entityInQueryIndex, Entity e) =>
-            {
-                if( move.x != 0 || move.y != 0 )
+            _moveInput = _actions.Default.Move;
+        }
+
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        {
+            var buffer = _barrier.CreateCommandBuffer().ToConcurrent();
+
+            float2 move = 0;
+            if (_moveInput.triggered)
+                move = _moveInput.ReadValue<Vector2>();
+
+            inputDeps = Entities
+                .WithAll<PlayerActor>()
+                .WithAll<TurnAction>()
+                .ForEach((int entityInQueryIndex, Entity e) =>
                 {
-                    buffer.AddComponent(entityInQueryIndex, e, new TryMove
+                    if (move.x != 0 || move.y != 0)
                     {
-                        dir = move
-                    });
+                        buffer.AddComponent<TryMove>(entityInQueryIndex, e, (int2)move);
 
                     // In this case we count all attempted moves as an action - even if it
                     // turns out to be an invalid move. If we wanted to change that behaviour
                     // we would check for a valid move in MoveSystem and remove the action then
                     buffer.RemoveComponent<TurnAction>(entityInQueryIndex, e);
-                }
-            }).Schedule(inputDeps);
+                    }
+                }).Schedule(inputDeps);
 
-        _barrier.AddJobHandleForProducer(inputDeps);
+            _barrier.AddJobHandleForProducer(inputDeps);
 
-        return inputDeps;
-    }
+            return inputDeps;
+        }
+    } 
 }
