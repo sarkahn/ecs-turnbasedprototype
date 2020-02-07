@@ -6,7 +6,7 @@ This example is based off an [excellent session from Unite Copenhagen 2019](http
 
 ![](images/demo.gif)
  
-*Players move, then entities move*
+*Players move, then enemies move*
 
 In every aspect of this prototype I tried to follow the "expected" workflow when working with Unity's ECS system (as of this writing and as far as I understand it).
 
