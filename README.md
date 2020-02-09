@@ -72,7 +72,7 @@ With the above class defined we can add our game turn to the loop by calling `Ad
 
 ```
 
-Notice ere we use the same `EnemyTurn` type used in the `EnemyTurnSystem`. With the turn defined and added to the turn loop, any entities with an `Enemy` component will receive a `TurnAction` component when it's the enemies' turn. In the "acting" system we need to make sure to query for our `TurnAction` components - this gives us the "turn based" behaviour:
+Notice we're we use the same `EnemyTurn` type used in the `EnemyTurnSystem`. With the turn defined and added to the turn loop, any entities with an `Enemy` component will receive a `TurnAction` component when it's the enemies' turn. In the "acting" system we need to make sure to query for our `TurnAction` components - this gives us the "turn based" behaviour:
 
 ##### [EnemyAISystem.cs](Assets/Enemies/EnemyAISystem.cs)
 ```
@@ -88,3 +88,9 @@ Notice ere we use the same `EnemyTurn` type used in the `EnemyTurnSystem`. With 
 ```
 
 [More coming]
+
+-------
+
+This project was developed for free in my off time, and quite a lot of work went into it. If you find it useful, please consider donating. Any amount you could spare would really help me out a great deal. Thank you!
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y54CX7AXFKQXG)
