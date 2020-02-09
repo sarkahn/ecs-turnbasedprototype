@@ -15,7 +15,6 @@ namespace TurnBasedTutorial.Enemies
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             dstManager.AddComponent<Enemy>(entity);
-            dstManager.AddComponent<AIActor>(entity);
             dstManager.AddComponent<Collidable>(entity);
         }
     } 

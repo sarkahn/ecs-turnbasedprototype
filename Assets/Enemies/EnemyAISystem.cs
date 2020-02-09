@@ -38,7 +38,8 @@ namespace TurnBasedTutorial.Enemies
 
             inputDeps = Entities
                 .WithStoreEntityQueryInField(ref _actingAI)
-                .WithAll<AIActor>()
+                .WithAll<Enemy>()
+                // Only act when we have a turn
                 .WithAll<TurnAction>()
                 .ForEach((int entityInQueryIndex, Entity e) =>
                 {
@@ -55,7 +56,7 @@ namespace TurnBasedTutorial.Enemies
 
         int2 GetRandomDirection()
         {
-            int r = _random.NextInt(0, 4);
+            int r = _random.NextInt(0, 5);
             switch(r)
             {
                 case 0: return new int2(1, 0);

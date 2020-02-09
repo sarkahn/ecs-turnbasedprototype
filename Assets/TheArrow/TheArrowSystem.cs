@@ -22,6 +22,7 @@ namespace TurnBasedTutorial.HighlightArrow
         public float animSpeed;
     }
 
+    [AlwaysUpdateSystem]
     public class TheArrowSystem : JobComponentSystem
     {
         EndSimulationEntityCommandBufferSystem _barrier;

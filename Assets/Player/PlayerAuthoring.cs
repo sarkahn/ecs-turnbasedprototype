@@ -4,12 +4,19 @@ using Unity.Entities;
 using UnityEngine;
 
 using TurnBasedTutorial.Movement;
+using System;
 
 namespace TurnBasedTutorial.Players
 {
-    public struct Player : IComponentData
+    public struct Player : IComponentData, IComparable<Player>
     {
         public int number;
+
+        public int CompareTo(Player other)
+        {
+            Debug.Log("COMPARING PLAYERS");
+            return number.CompareTo(other.number);
+        }
     }
 
     public class PlayerAuthoring : MonoBehaviour, IConvertGameObjectToEntity
@@ -24,8 +31,11 @@ namespace TurnBasedTutorial.Players
         {
             // Auto assign player number
             dstManager.AddComponentData<Player>(entity, new Player { number = _counter++ });
-            dstManager.AddComponent<PlayerActor>(entity);
             dstManager.AddComponent<Collidable>(entity);
+
+#if UNITY_EDITOR
+            dstManager.SetName(entity, "Player " + (_counter - 1));
+#endif
 
         }
     } 

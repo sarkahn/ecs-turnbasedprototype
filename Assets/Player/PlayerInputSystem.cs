@@ -38,7 +38,7 @@ namespace TurnBasedTutorial.Players
                 move = _moveInput.ReadValue<Vector2>();
 
             inputDeps = Entities
-                .WithAll<PlayerActor>()
+                .WithAll<Player>()
                 .WithAll<TurnAction>()
                 .ForEach((int entityInQueryIndex, Entity e) =>
                 {
