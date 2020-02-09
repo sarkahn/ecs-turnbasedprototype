@@ -14,7 +14,14 @@ All work takes place in jobs. It uses the conversion system to allow you to modi
 
 ------
 
-I've built it to be as simple as possible while still being extensible. The concept is fairly straightforward - you define a `GameTurnSystem<TurnType,ActorType>` like this:
+The core idea of the turn based framework is this:
+* The framework loops through "game turns" (systems)
+* The "game turns" hand out "actions" (components)
+* Behaviour systems include the "actions" in their queries 
+
+And voila - automatic turn based behaviour.
+
+Of course, it's ECS so there's a whole lot of boiler-plate involved in that process. I've tried to build this to be relatively simple while still being extensible. The concept is fairly straightforward - you define a `GameTurnSystem<TurnType,ActorType>` like this:
 
 ##### [EnemyTurnSystem.cs](Assets/EnemyTurnSystem.cs)
 ```
